@@ -1,77 +1,27 @@
-apiVersion: v1
-items:
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    annotations:
-      deployment.kubernetes.io/revision: "4"
-      kubectl.kubernetes.io/last-applied-configuration: |
-        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"3"},"generation":3,"labels":{"app.kubernetes.io/instance":"demo-app-application"},"name":"demo-app","namespace":"demo","resourceVersion":"85532","uid":"c569e72f-c42c-4de9-a84e-079b8439478c"},"spec":{"progressDeadlineSeconds":600,"replicas":3,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"demo-app"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app":"demo-app"}},"spec":{"containers":[{"args":["-text","'v2'"],"image":"hashicorp/http-echo","imagePullPolicy":"Always","name":"demo-app","ports":[{"containerPort":5678,"protocol":"TCP"}],"resources":{"limits":{"cpu":"100m","memory":"100Mi"},"requests":{"cpu":"80m","memory":"64Mi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":3,"conditions":[{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"message":"ReplicaSet \"demo-app-7d9d4f8fb7\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":3,"readyReplicas":3,"replicas":3,"updatedReplicas":3}}
-    generation: 4
-    labels:
-      app.kubernetes.io/instance: demo-app-application
-    name: demo-app
-    namespace: demo
-    resourceVersion: "85879"
-    uid: c569e72f-c42c-4de9-a84e-079b8439478c
-  spec:
-    progressDeadlineSeconds: 600
-    replicas: 3
-    revisionHistoryLimit: 10
-    selector:
-      matchLabels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  selector:
+    matchLabels:
+      app: demo-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
         app: demo-app
-    strategy:
-      rollingUpdate:
-        maxSurge: 25%
-        maxUnavailable: 25%
-      type: RollingUpdate
-    template:
-      metadata:
-        annotations:
-          linkerd.io/inject: enabled
-        labels:
-          app: demo-app
-      spec:
-        containers:
-        - args:
-          - -text
-          - '''v2'''
-          image: hashicorp/http-echo
-          imagePullPolicy: Always
-          name: demo-app
-          ports:
-          - containerPort: 5678
-            protocol: TCP
-          resources:
-            limits:
-              cpu: 100m
-              memory: 100Mi
-            requests:
-              cpu: 80m
-              memory: 64Mi
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        schedulerName: default-scheduler
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-  status:
-    availableReplicas: 3
-    conditions:
-    - message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: "True"
-      type: Available
-    - message: ReplicaSet "demo-app-795549f6d" has successfully progressed.
-      reason: NewReplicaSetAvailable
-      status: "True"
-      type: Progressing
-    observedGeneration: 4
-    readyReplicas: 3
-    replicas: 3
-    updatedReplicas: 3
-kind: List
-metadata: {}
----
+    spec:
+      containers:
+      - name: demo-app
+        image: hashicorp/http-echo
+        args: ["-text", "'v2'"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "80m"
+          limits:
+            memory: "100Mi"
+            cpu: "100m"
