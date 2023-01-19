@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: demo
+spec:
+  selector:
+    matchLabels:
+      app: demo-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: hashicorp/http-echo
+        args: ["-text", "'version 1'"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "80m"
+          limits:
+            memory: "100Mi"
+            cpu: "100m"
