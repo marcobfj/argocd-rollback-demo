@@ -7,6 +7,7 @@ spec:
     app: demo-app
   ports:
   - port: 5678
+    type: NodePort
     protocol: TCP
     targetPort: 5678
     nodePort: 30007
