@@ -19,7 +19,7 @@ spec:
     - CreateNamespace=true
 
     automated:
-      selfHeal: true # Override manual changes in the cluster
+      selfHeal: false # Override manual changes in the cluster
       prune: true # Delete component if removed in repository
 
 # ArgoCD check every 3 min for changes.
