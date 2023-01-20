@@ -1,0 +1,42 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: orange-canary
+  namespace: demo
+spec:
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orange-app
+  # the maximum time in seconds for the canary deployment
+  # to make progress before it is rollback (default 600s)
+  progressDeadlineSeconds: 180
+  service:
+    # ClusterIP port number
+    port: 5678
+    # container port number or name (optional)
+    targetPort: 5678
+  analysis:
+    # schedule interval (default 60s)
+    interval: 30s
+    # canary increment step percentage (0-100)
+    stepWeight: 10
+    # max traffic percentage routed to canary percentage (0-100)
+    maxWeight: 100
+    # max number of failed metric checks before rollback
+    threshold: 2
+    # Linkerd Prometheus checks
+    metrics:
+      - name: request-success-rate
+        # minimum req success rate (non 5xx responses)
+        # percentage (0-100)
+        thresholdRange:
+          min: 99
+        interval: 30s
+      - name: request-duration
+        # maximum req duration P99
+        # milliseconds
+        thresholdRange:
+          max: 500
+        interval: 30s
