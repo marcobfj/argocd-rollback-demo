@@ -17,7 +17,7 @@ spec:
       containers:
       - name: orange-app
         image: hashicorp/http-echo
-        args: ["-text", "'v10'"]
+        args: ["-text", "'v9.2'"]
         ports:
         - containerPort: 5678
         resources:
