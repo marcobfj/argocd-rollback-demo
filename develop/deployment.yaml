@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-app
+  name: orange-app
 spec:
   selector:
     matchLabels:
-      app: demo-app
+      app: orange-app
   replicas: 3
   template:
     metadata:
       annotations:
           linkerd.io/inject: enabled
       labels:
-        app: demo-app
+        app: orange-app
     spec:
       containers:
-      - name: demo-app
+      - name: orange-app
         image: hashicorp/http-echo
         args: ["-text", "'v2'"]
         ports:
