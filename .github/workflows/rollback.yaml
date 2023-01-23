@@ -32,5 +32,4 @@ jobs:
         
       - name: Push changes to repository
         run: |
-          echo "https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/$GITHUB_REPOSITORY"
-          git push "https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/$GITHUB_REPOSITORY"
+          git push
