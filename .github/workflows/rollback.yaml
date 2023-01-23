@@ -28,4 +28,6 @@ jobs:
         run: git revert HEAD --no-edit
         
       - name: Push changes to repository
-        run: git push "https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/$GITHUB_REPOSITORY"
+        run: |
+          echo "https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/$GITHUB_REPOSITORY"
+          git push "https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/$GITHUB_REPOSITORY"
