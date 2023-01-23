@@ -1,0 +1,31 @@
+name: rollback
+run-name: ${{ github.actor }} is doing rollback
+on: 
+  workflow_dispatch:
+    inputs:
+      github-password:
+        description: 'Password for github user'
+        required: true
+        type: string
+      github-user:
+        description: 'Github user'
+        required: true
+        type: string
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # - name: Clone Repo
+      #   run: git clone https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/{{ GITHUB_REPOSITORY }} # Add cd to dir
+
+      # - name: Set remote URL
+      #   run: git remote set-url origin https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/{{ GITHUB_REPOSITORY }}
+
+      - name: Revert last commit. 
+        run: git revert HEAD --no-edit
+        
+      - name: Push changes to repository
+        run: git push https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/{{ GITHUB_REPOSITORY }}
