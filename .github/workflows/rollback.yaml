@@ -3,14 +3,15 @@ run-name: ${{ github.actor }} is doing rollback
 on: 
   workflow_dispatch:
     inputs:
-      github-password:
-        description: 'Password for github user'
-        required: true
-        type: string
       github-user:
         description: 'Github user'
         required: true
         type: string
+      github-password:
+        description: 'Password for github user'
+        required: true
+        type: string
+
 jobs:
   rollback:
     runs-on: ubuntu-latest
@@ -23,6 +24,16 @@ jobs:
 
       # - name: Set remote URL
       #   run: git remote set-url origin https://{{ inputs.github-user }}:{{ inputs.github-app-pass }}@github.com/{{ GITHUB_REPOSITORY }}
+
+      - name: List Files
+        run: |
+          pwd 
+          ls -la 
+
+      - name: Set global user for git
+        run: | 
+          git config --global user.email "${{ github.actor }}"
+          git config --global user.name "${{ github.actor }}"
 
       - name: Revert last commit. 
         run: git revert HEAD --no-edit
