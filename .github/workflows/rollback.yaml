@@ -24,12 +24,8 @@ jobs:
           git config --global user.email "${{ github.actor }}"
           git config --global user.name "${{ github.actor }}"
 
-      - name: Config remote repository URL 
-        run: git remote set-url origin ${{ secrets.ssh }}
-
       - name: Revert last commit. 
         run: git revert HEAD --no-edit
         
       - name: Push changes to repository
-        run: |
-          git push
+        run: git push
