@@ -13,15 +13,14 @@ jobs:
           git config --global user.email "${{ github.actor }}"
           git config --global user.name "${{ github.actor }}"
 
-      - name: Git log 
-        run: git log
-
       - name: list files
         run: ls -la 
 
       - name: Revert last commit. 
         run: |
-          git revert HEAD~1 --no-edit
+          git reset head~1
+          git status
+          git commit -am "Rollback to previous commit"
 
       - name: Git log 
         run: git log
