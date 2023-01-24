@@ -1,27 +1,37 @@
-name: Manually rollback
-on:
+name: rollback
+run-name: ${{ github.actor }} is doing rollback
+on: 
   workflow_dispatch:
     inputs:
-      revision:
-        description: 'The revision to rollback to'
-        required: true
-
       branch:
         description: 'The branch that the rollback affects'
         required: true
 
 jobs:
-  Rollback:
+  rollback:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-           ref: ${{ github.event.inputs.branch }}
-           fetch-depth: 0
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - name: Rolls back to a certain version
-        uses: fivebluepetals/rollback-action@v1.0
-        with:
-          branch: ${{ github.event.inputs.branch }}
-          revision: ${{ github.event.inputs.revision }}
+      - name: Set global user for git
+        run: | 
+          git config --global user.email "${{ github.actor }}"
+          git config --global user.name "${{ github.actor }}"
+
+      - name: Git log 
+        run: git log
+
+      - name: list files
+        run: ls -la 
+
+      - name: Revert last commit. 
+        run: |
+          git checkout {{ inputs.branch }}
+          git revert HEAD --no-edit
+
+      - name: Git log 
+        run: git log
+        
+      # - name: Push changes to repository
+      #   run: git push
