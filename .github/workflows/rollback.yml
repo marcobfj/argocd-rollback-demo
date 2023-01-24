@@ -24,8 +24,14 @@ jobs:
           git config --global user.email "${{ github.actor }}"
           git config --global user.name "${{ github.actor }}"
 
+      - name: Git log 
+        run: git log
+
       - name: Revert last commit. 
         run: git revert HEAD --no-edit
+
+      - name: Git log 
+        run: git log
         
-      - name: Push changes to repository
-        run: git push
+      # - name: Push changes to repository
+      #   run: git push
