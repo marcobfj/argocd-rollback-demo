@@ -17,8 +17,13 @@ jobs:
       - name: Git log 
         run: git log
 
+      - name: list files
+        run: ls -la 
+
       - name: Revert last commit. 
-        run: git revert HEAD --no-edit
+        run: |
+          git status 
+          git revert HEAD --no-edit
 
       - name: Git log 
         run: git log
