@@ -1,6 +1,16 @@
 name: rollback
 run-name: ${{ github.actor }} is doing rollback
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
+    inputs:
+      github-user:
+        description: 'Github user'
+        required: true
+        type: string
+      github-app-pass:
+        description: 'Password for github user'
+        required: true
+        type: string
 
 jobs:
   rollback:
