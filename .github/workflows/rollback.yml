@@ -1,6 +1,5 @@
-name: rollback
-run-name: ${{ github.actor }} is doing rollback
-on: 
+name: Manually rollback
+on:
   workflow_dispatch:
     inputs:
       revision:
@@ -12,11 +11,14 @@ on:
         required: true
 
 jobs:
-  rollback:
+  Rollback:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+           ref: ${{ github.event.inputs.branch }}
+           fetch-depth: 0
 
       - name: Rolls back to a certain version
         uses: fivebluepetals/rollback-action@v1.0
