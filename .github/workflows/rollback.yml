@@ -28,7 +28,7 @@ jobs:
       - name: Revert last commit. 
         run: |
           git checkout "${{ inputs.branch }}"
-          git revert HEAD --no-edit
+          git revert HEAD~1 --no-edit
 
       - name: Git log 
         run: git log
