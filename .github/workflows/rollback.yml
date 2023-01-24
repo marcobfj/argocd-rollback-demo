@@ -1,12 +1,6 @@
 name: rollback
 run-name: ${{ github.actor }} is doing rollback
-on: 
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'The branch that the rollback affects'
-        required: true
-
+on: [workflow_dispatch]
 jobs:
   rollback:
     runs-on: ubuntu-latest
