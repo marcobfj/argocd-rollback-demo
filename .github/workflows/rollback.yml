@@ -22,7 +22,7 @@ jobs:
 
       - name: Revert last commit. 
         run: |
-          git branch
+          git reset --hard 
           git revert HEAD --no-edit
 
       - name: Git log 
