@@ -1,6 +1,15 @@
 name: rollback
 run-name: ${{ github.actor }} is doing rollback
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: 'The revision to rollback to'
+        required: true
+
+      branch:
+        description: 'The branch that the rollback affects'
+        required: true
 
 jobs:
   rollback:
@@ -9,24 +18,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set global user for git
-        run: | 
-          git config --global user.email "${{ github.actor }}"
-          git config --global user.name "${{ github.actor }}"
-
-      - name: Git log 
-        run: git log
-
-      - name: list files
-        run: ls -la 
-
-      - name: Revert last commit. 
-        run: |
-          git reset --hard 
-          git revert HEAD --no-edit
-
-      - name: Git log 
-        run: git log
-        
-      # - name: Push changes to repository
-      #   run: git push
+      - name: Rolls back to a certain version
+        uses: fivebluepetals/rollback-action@v1.0
+        with:
+          branch: ${{ github.event.inputs.branch }}
+          revision: ${{ github.event.inputs.revision }}
