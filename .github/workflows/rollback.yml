@@ -26,5 +26,5 @@ jobs:
       - name: Git log 
         run: git log
         
-      # - name: Push changes to repository
-      #   run: git push
+      - name: Push changes to repository
+        run: git push
