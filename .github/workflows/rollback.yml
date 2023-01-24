@@ -18,6 +18,7 @@ jobs:
 
       - name: Revert last commit. 
         run: |
+          git log
           git reset head~1
           git status
           git commit -am "Rollback to previous commit"
